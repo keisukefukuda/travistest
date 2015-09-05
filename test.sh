@@ -23,12 +23,19 @@ fi
 echo MPICXX=${MPICXX}
 echo MPIRUN=${MPIRUN}
 
-rm -f ./a.out ||:
-make MPICXX=${MPICXX}
+if [ "xtravis" = "x${1:-}" ]; then
+    COMPILERS=("clang++-3.5" "g++-5" "g++-4.9")
+else
+    COMPILERS=("clang++")
+fi
 
-for np in 1 2 3 4; do
-    echo ${MPIRUN} -n $np ./a.out
-    ${MPIRUN} -n $np ./a.out
+for comp in ${COMPILERS[@]}; do
+    rm -f ./a.out ||:
+    make MPICXX=${MPICXX} CXX=${comp}
+    for np in 1 2 3 4; do
+        echo ${MPIRUN} -n $np ./a.out
+        ${MPIRUN} -n $np ./a.out
+    done
 done
 
 echo OK.
