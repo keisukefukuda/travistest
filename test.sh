@@ -2,8 +2,9 @@
 
 set -eu
 
-for cand in mpirun mpirun-mpich-devel-clang mpirun.mpich; do
-    MPIRUN=$(which $cand ||:)
+for postfix in "" "-mpich-devel-clang" ".mpich"; do
+    MPIRUN=$(which "mpirun${postfix}" ||:)
+    MPICXX=$(which "mpicxx${postfix}" ||:)
     if [ -x "${MPIRUN}" ]; then
         break
     fi
@@ -14,13 +15,6 @@ if [ ! -x "${MPIRUN}" ]; then
     exit -1
 fi
 
-for cand in mpicxx mpicxx-mpich-devel-clang mpicxx.mpich; do
-    MPICXX=$(which $cand ||:)
-    if [ -x "${MPICXX}" ]; then
-        break
-    fi
-done
-    
 if [ ! -x "${MPICXX}" ]; then
     echo "ERROR: Can't find mpirun command."
     exit -1
