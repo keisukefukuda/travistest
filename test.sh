@@ -29,7 +29,7 @@ fi
 echo MPICXX=${MPICXX}
 echo MPIRUN=${MPIRUN}
 
-rm ./a.out
+rm -f ./a.out ||:
 make MPICXX=${MPICXX}
 
 for np in 1 2 3 4; do
