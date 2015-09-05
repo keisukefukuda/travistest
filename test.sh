@@ -30,9 +30,9 @@ echo MPICXX=${MPICXX}
 echo MPIRUN=${MPIRUN}
 
 if [ "x${1:-}" = "xtravis" ]; then
-    COMPILERS=("g++-4.9" "g++-5" "clang++-3.5")
+    COMPILERS=array("g++-4.9" "g++-5" "clang++-3.5")
 else
-    COMPILERS=("clang++")
+    COMPILERS=array("clang++")
 fi
 
 for comp in ${COMPILERS[@]}; do
