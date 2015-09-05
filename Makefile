@@ -1,6 +1,7 @@
 CXXFLAGS = -O2 -Wall -std=c++11 
 CXX ?= clang++
-MPICXX ?= mpicxx -cxx=clang++
+MPICXX ?= mpicxx
+MPICXX_FLAGS ?= -cxx:clang++
 
 a.out: main.cpp
 	${CXX} --version
