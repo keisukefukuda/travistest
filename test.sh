@@ -17,7 +17,9 @@ if [ ! -x "${MPIRUN}" ]; then
 fi
 
 env
+echo
 date
+
 echo MPICXX=$MPICXX
 echo MPIRUN=$MPIRUN
 make MPICXX=${MPICXX}
@@ -28,4 +30,3 @@ for np in 1 2 3 4; do
 done
 
 echo OK.
-    
