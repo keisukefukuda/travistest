@@ -16,17 +16,25 @@ if [ ! -x "${MPIRUN}" ]; then
     exit -1
 fi
 
-env
-echo
 date
 
 echo MPICXX=$MPICXX
 echo MPIRUN=$MPIRUN
-make MPICXX=${MPICXX}
 
-for np in 1 2 3 4; do
-    echo ${MPIRUN} -n $np ./a.out
-    ${MPIRUN} -n $np ./a.out
+for CXX in g++-4.9 g++-5 clang++-3.5 clang++ ; do
+    echo "----------------------"
+    CXX=$(which $CXX ||:)
+    if [ -x "${CXX}" ]; then
+        rm ./a.out
+        make MPICXX=${MPICXX}
+
+        for np in 1 2 3 4; do
+            echo ${MPIRUN} -n $np ./a.out
+            ${MPIRUN} -n $np ./a.out
+        done
+    else
+        echo "Can't find ${CXX}"
+    fi
 done
 
 echo OK.
