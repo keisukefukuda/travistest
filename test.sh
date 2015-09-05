@@ -29,12 +29,6 @@ fi
 echo MPICXX=${MPICXX}
 echo MPIRUN=${MPIRUN}
 
-if [ "x${1:-}" = "xtravis" ]; then
-    COMPILERS=("g++-4.9" "g++-5" "clang++-3.5")
-else
-    COMPILERS=("clang++")
-fi
-
 rm ./a.out
 make MPICXX=${MPICXX}
 
