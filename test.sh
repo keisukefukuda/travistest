@@ -30,26 +30,17 @@ echo MPICXX=${MPICXX}
 echo MPIRUN=${MPIRUN}
 
 if [ "x${1:-}" = "xtravis" ]; then
-    COMPILERS=array("g++-4.9" "g++-5" "clang++-3.5")
+    COMPILERS=("g++-4.9" "g++-5" "clang++-3.5")
 else
-    COMPILERS=array("clang++")
+    COMPILERS=("clang++")
 fi
 
-for comp in ${COMPILERS[@]}; do
-    echo "----------------------"
-    CXX=$(which ${comp} ||:)
-    if [ -x "${CXX}" ]; then
-        rm ./a.out
-        make MPICXX=${MPICXX}
+rm ./a.out
+make MPICXX=${MPICXX}
 
-        for np in 1 2 3 4; do
-            echo ${MPIRUN} -n $np ./a.out
-            ${MPIRUN} -n $np ./a.out
-        done
-    else
-        echo "Can't find COMPILER ${COMPILER}"
-        exit 1
-    fi
+for np in 1 2 3 4; do
+    echo ${MPIRUN} -n $np ./a.out
+    ${MPIRUN} -n $np ./a.out
 done
 
 echo OK.
